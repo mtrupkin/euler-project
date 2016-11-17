@@ -21,11 +21,11 @@ class ProblemSuite extends FunSuite {
   }
 
   test("Pandigital example") {
-    assert(Pandigital.isPandigital(39, 186, 7254) === true)
+    assert(Pandigital.isPandigitalProduct(39, 186, 7254) === true)
   }
 
   test("Pandigital duplicate twos") {
-    assert(Pandigital.isPandigital(2, 6729, 13458) === false)
+    assert(Pandigital.isPandigitalProduct(2, 6729, 13458) === false)
   }
 
 }
