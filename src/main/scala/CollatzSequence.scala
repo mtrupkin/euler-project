@@ -1,3 +1,5 @@
+import scala.collection.mutable
+
 /**
   * Problem - 14
   *
@@ -8,29 +10,55 @@
   * 13, 40, 20, 10, 5, 16, 8, 4, 2, 1
   */
 object CollatzSequence extends App {
-  def next(n: Int): Int = {
+  lazy val cache_ : mutable.Map[Long, List[Long]] = mutable.Map.empty
+
+  def next(n: Long): Long = {
     n match {
       case _ if n % 2 == 0 => n / 2
       case _ => 3 * n + 1
     }
   }
 
-  def apply(n: Int): List[Int] = {
-    def collatz(n: Int, acc: List[Int]): List[Int] = {
-      val n1 = next(n)
-      if (n1 == 1) {
-        n1 :: acc
-      } else {
-        collatz(n1, n1 :: acc)
+  def cache(x: Long, xs: List[Long]): Unit = {
+    if (!cache_.contains(x)) {
+      xs match {
+        case n :: _ => {
+          cache_(x) = xs
+          cache(xs.head, xs.tail)
+        }
+        case _ =>
       }
     }
+  }
 
-    collatz(n, List(n))
+  def apply(n: Long): List[Long] = {
+    def collatz(n: Long, acc: List[Long]): List[Long] = {
+      cache_.get(n) match {
+        case Some(hit) => {
+          val res = (acc :+ n) ++ hit
+          cache(res.head, res.tail)
+          res
+        }
+        case None => {
+          if (n == 1) {
+            val res = acc :+ n
+            cache(res.head, res.tail)
+            res
+          } else {
+            val n1 = next(n)
+            collatz(n1, acc :+ n)
+          }
+        }
+      }
+
+    }
+
+   collatz(n, List())
   }
 
   val sequences = (1 to 1000000).map(CollatzSequence(_))
 
   val longestSequence = sequences.maxBy(_.length)
-  println(longestSequence.last)
+  println(longestSequence.head)
 
 }

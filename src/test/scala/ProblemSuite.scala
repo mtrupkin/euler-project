@@ -16,4 +16,16 @@ class ProblemSuite extends FunSuite {
      assert(CollatzSequence(13).length === 10)
   }
 
+  test("Count paths example") {
+    assert(LatticePaths(2) === 6)
+  }
+
+  test("Pandigital example") {
+    assert(Pandigital.isPandigital(39, 186, 7254) === true)
+  }
+
+  test("Pandigital duplicate twos") {
+    assert(Pandigital.isPandigital(2, 6729, 13458) === false)
+  }
+
 }

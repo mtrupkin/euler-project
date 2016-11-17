@@ -14,7 +14,6 @@ object LargestPrimeFactor extends App {
     def primes(ps: List[Long], ns: List[Long]): List[Long] = {
         // remove composite numbers from candidates
         val ns2 = ns.filter(_ % ps.head != 0)
-        if (ns2.isEmpty) ps else primes(ns2.head :: ps, ns2)
         ns2 match {
           case nextPrime :: _ => primes(nextPrime :: ps, ns2)
           case Nil => ps
@@ -28,9 +27,8 @@ object LargestPrimeFactor extends App {
   def factors(n: Long, acc: List[Long], primes: List[Long]): List[Long] = {
     val factor = primes.find( n % _ == 0)
 
-
     factor match {
-      case Some(f) => factors(n/f, f :: acc, primes)
+      case Some(f) => factors(n/f, f :: acc, primes.dropWhile( _ != f))
       case None => acc
     }
   }
@@ -38,11 +36,11 @@ object LargestPrimeFactor extends App {
   def apply(n: Long): Long = {
     val ps = readPrimes()
     val fs = factors(n, Nil, ps)
-    fs.last
+    fs.head
   }
 
   def writePrimes(n: Long): Unit = {
-    val ps = primes(n)
+    val ps = primes(n).reverse
     val pw = new PrintWriter("primes.txt")
     ps.foreach(pw.println(_))
     pw.close()
