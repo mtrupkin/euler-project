@@ -1,24 +1,6 @@
 import scala.collection.mutable
 
-/**
-  * Created by miketrupkin on 11/11/16.
-  */
-object LatticePaths extends App {
-
-  lazy val p0 = Point(0, 0)
-
-  def apply(n: Int): Int = {
-    val p = Point(n, n)
-    val dijkstra = new Dijkstra(n)
-    val count = dijkstra.pathsCount(p, p0) * 2
-    println(count)
-    count
-  }
-
-  apply(20)
-}
-
-object Problem15 extends App {
+object Problem_015 extends App {
 
   def solve: Long = paths(20, 20)
 

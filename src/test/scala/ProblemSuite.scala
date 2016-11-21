@@ -5,11 +5,11 @@ class ProblemSuite extends FunSuite {
 
 
   test("multiples example") {
-     assert(SumMultiples(10) === 23)
+     assert(Problem_001(10) === 23)
   }
 
   test("prime factorization example") {
-     assert(LargestPrimeFactor(13195) === 29)
+     assert(Problem_003(13195) === 29)
   }
 
   test("Collatz example") {

@@ -6,20 +6,6 @@ import scala.io.Source
 object Numbers extends App {
   def toDigits(n: Int): List[Int] = n.toString.map(_.asDigit).toList
 
-  // returns primes from 2 to n
-  def primes(n: Long): List[Long] = {
-    def primes(ps: List[Long], ns: List[Long]): List[Long] = {
-      // remove composite numbers from candidates
-      val ns2 = ns.filter(_ % ps.head != 0)
-      ns2 match {
-        case nextPrime :: _ => primes(nextPrime :: ps, ns2)
-        case Nil => ps
-      }
-    }
-
-    primes(List(2), Range.Long(3L, n, 2L).toList)
-  }
-
 
   lazy val primes_ : List[Long] = {
     val is = getClass.getResourceAsStream("primes.txt")

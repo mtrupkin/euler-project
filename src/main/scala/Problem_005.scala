@@ -1,15 +1,10 @@
 /**
-  * Created by miketrupkin on 11/18/16.
+  * Smallest positive number that is evenly divisible by all of the numbers from 1 to 20
+  *
+  * 9699690 is the product of all primes less than 20
   */
-object SmallestMultiple extends App {
-  // 9699690 product of all primes less than 20
-  def isMultiple(n: Long): Boolean = {
-    (2 to 20).forall(n % _ == 0)
-  }
-
-  def missingMultiple(n: Long): Long = {
-    (2 to 20).find(n % _ != 0).get
-  }
+object Problem_005 extends App {
+  def isMultiple(n: Long): Boolean = (2 to 20).forall(n % _ == 0)
 
   def missingMultiples(n: Long): List[Long] = {
     (2 to 20).filter(n % _ != 0).map(_.toLong).toList

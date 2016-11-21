@@ -1,7 +1,7 @@
 /**
   * Created by miketrupkin on 11/17/16.
   */
-object PalindromeProduct extends App {
+object Problem_004 extends App {
   def isPalindrome(n: Int): Boolean = {
     val digits = Numbers.toDigits(n)
     digits == digits.reverse
