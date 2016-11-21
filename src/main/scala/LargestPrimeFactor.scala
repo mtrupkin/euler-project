@@ -24,18 +24,18 @@ object LargestPrimeFactor extends App {
   }
 
   // returns prime factors of n
-  def factors(n: Long, acc: List[Long], primes: List[Long]): List[Long] = {
+  def primeFactors(n: Long, acc: List[Long], primes: List[Long]): List[Long] = {
     val factor = primes.find( n % _ == 0)
 
     factor match {
-      case Some(f) => factors(n/f, f :: acc, primes.dropWhile( _ != f))
+      case Some(f) => primeFactors(n/f, f :: acc, primes.dropWhile( _ != f))
       case None => acc
     }
   }
 
   def apply(n: Long): Long = {
     val ps = readPrimes()
-    val fs = factors(n, Nil, ps)
+    val fs = primeFactors(n, Nil, ps)
     fs.head
   }
 

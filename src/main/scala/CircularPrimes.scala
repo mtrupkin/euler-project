@@ -27,7 +27,7 @@ object CircularPrimes extends App {
 
   def circularPrime(n: Int): Boolean = {
     val q = circulars(n)
-    q.forall(Primes.isPrime(_))
+    q.forall(BigInt(_).isProbablePrime(10))
   }
 
 

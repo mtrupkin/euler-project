@@ -28,4 +28,8 @@ class ProblemSuite extends FunSuite {
     assert(Pandigital.isPandigitalProduct(2, 6729, 13458) === false)
   }
 
+  test("Prime factors") {
+    assert(Numbers.primeFactors(13195).contains(29) === true)
+  }
+
 }
