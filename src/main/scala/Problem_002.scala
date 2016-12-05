@@ -1,8 +1,3 @@
-import scala.collection.mutable
-
-/**
-  *
-  */
 object Problem_002 extends App {
   val fibs: Stream[Int] = 0 #:: fibs.scanLeft(1)(_ + _)
 

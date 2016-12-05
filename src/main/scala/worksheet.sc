@@ -1,12 +1,13 @@
-//println(Problem8.series.toList.sliding(4).toList.map(_.product))
+// import Problem_089x._
 
-Problem_008.series.toList.sliding(4).toList
+//val sixteen = List("IIIIIIIIIIIIIIII", "VIIIIIIIIIII", "VVIIIIII", "XIIIIII", "VVVI", "XVI")
+//val sixteen = List("IIIIIIIIIIIIIIII")
 
+//parseRoman("III")
 
+//sixteen.map(parseRoman) //.foreach(println)
 
-
-
-
-
+import Primes._
+49.isPrime
 
 

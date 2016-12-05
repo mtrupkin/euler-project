@@ -1,40 +1,60 @@
 /**
-  * Created by miketrupkin on 11/17/16.
+  * Find the largest palindrome made from the product of two 3-digit numbers.
   */
 object Problem_004 extends App {
+  // smallest number as a product of two 3-digit numbers
+  val smallestProduct = 10000 // 100 * 100
+
+  // largest number as a product of two 3-digit numbers
+  var largestProduct = 998001 // 999 * 999
+
   def isPalindrome(n: Int): Boolean = {
     val digits = Numbers.toDigits(n)
     digits == digits.reverse
   }
 
+  def isThreeDigits(n: Long): Boolean = Numbers.toDigits(n).length == 3
+  def isThreeDigits(n: (Long, Long)): Boolean = isThreeDigits(n._1) && isThreeDigits(n._2)
+
+  // list of all two factors of a number
+  // where n = a * b
   def products(n: Int): List[(Long, Long)] = {
-    val factors = Numbers.primeFactors(n)
+    val factors = Primes.primeFactors(n)
+    println(s"n: $n factors: $factors\n")
     val factorsLength = factors.length
+    // optimization
+    if (factorsLength == 2) return List((factors(0), factors(1)))
     val products = for {
       factorCount1 <- (1 to factorsLength/2).toList
       factorCount2 = factorsLength - factorCount1
     } yield {
-      val q1 = factors.combinations(factorCount1).map(_.product)
-      val q2 = factors.combinations(factorCount2).map(_.product)
-      q1.zip(q2.toList.reverse.toIterator)
+      // all combinations of factors from 1 up to half the length of factors
+      val q1 = factors.combinations(factorCount1).map(_.product).toList
+      // all remaining combinations of factors
+      val q2 = factors.combinations(factorCount2).map(_.product).toList.reverse
+      println(q1)
+      println(q2)
+      println
+      q1.zip(q2)
     }
-    val l = products.flatten
-    l
+    println
+    println(products.flatten)
+    println
+    products.flatten
   }
 
-  def nextPalindrome(last: Int): Int = {
-    Iterator.from(last-1, -1).takeWhile(_ > 10000).find(isPalindrome).get
+  // find the next smallest palindrome
+  def prevPalindrome(last: Int): Int = {
+    Iterator.from(last-1, -1).find(isPalindrome).get
   }
 
-  def threeDigits(n: Long): Boolean = Numbers.toDigits(n.toInt).length == 3
-
-  var palindrome = 998001
-  while (true) {
-    palindrome = nextPalindrome(palindrome)
+  // find palindrome that is product of two 3-digit numbers
+  def searchPalindrome(guess: Int): Int = {
+    val palindrome = prevPalindrome(guess)
     val ps = products(palindrome)
-    ps.find(x => threeDigits(x._1) && threeDigits(x._2)).
-      map(y => println(s"$palindrome: $y"))
-
+    if (ps.exists(isThreeDigits)) palindrome
+      else searchPalindrome(palindrome)
   }
 
+  println(searchPalindrome(largestProduct))
 }
