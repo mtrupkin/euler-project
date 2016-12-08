@@ -13,10 +13,11 @@ object Fraction {
 case class Fraction(a: BigInt, b: BigInt) {
   require(b != 0)
 
-  private val gcd: BigInt = a.gcd(b)
+  private lazy val gcd: BigInt = a.gcd(b)
 
-  val numerator: BigInt = a / gcd
-  val denominator: BigInt = b / gcd
+  lazy val numerator: BigInt = a / gcd
+  lazy val denominator: BigInt = b / gcd
+
 
   def + (f: Fraction): Fraction = Fraction(numerator * f.denominator + f.numerator * denominator, denominator * f.denominator)
 
@@ -25,6 +26,12 @@ case class Fraction(a: BigInt, b: BigInt) {
   def / (f: Fraction): Fraction = Fraction(numerator * f.denominator, f.numerator * denominator)
 
   def value(scale: Int): BigDecimal = BigDecimal(numerator, scale) / BigDecimal(denominator, scale)
+
+  def < (f: Fraction): Boolean = {
+    val n1 = a * f.b
+    val n2 = f.a * b
+    n1 < n2
+  }
 
   override def toString = s"$numerator / $denominator"
 }

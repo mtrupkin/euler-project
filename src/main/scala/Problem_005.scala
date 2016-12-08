@@ -9,7 +9,7 @@ object Problem_005 extends App {
   def isMultiple(n: Long): Boolean = (2 to 20).forall(n % _ == 0)
 
   // find the first number (1 to 20) that is not a multiple of n
-  def missingMultiple(n: Long): Long = (2 to 20).filter(n % _ != 0).head
+  def missingMultiple(n: Long): Long = (2 to 20).find(n % _ != 0).get
 
   // find the prime factor of the first missing multiple m
   def missingPrimeFactor(n: Long): Long = Primes.primeFactors(missingMultiple(n)).head

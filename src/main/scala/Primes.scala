@@ -6,7 +6,7 @@ import scala.collection.mutable.ArrayBuffer
   * Prime numbers and utilities
   */
 object Primes extends App {
-  lazy val primes_ = this(100000)
+  lazy val primes_ = this(1000000)
 
   implicit class PrimeDetector[B](n: B) {
     def isPrime(implicit num: Integral[B]): Boolean = {
@@ -14,39 +14,21 @@ object Primes extends App {
     }
   }
 
-
-  // returns primes from 2 to n
-  def primesFunctional(n: Long): List[Long] = {
-    def primes(ps: List[Long], ns: List[Long]): List[Long] = {
-      // remove composite numbers from candidates
-      val ns2 = ns.filter(_ % ps.head != 0)
-      ns2 match {
-        case nextPrime :: _ => primes(nextPrime :: ps, ns2)
-        case Nil => ps
-      }
-    }
-
-    primes(List(2), Range.Long(3L, n, 2L).toList)
-  }
-
   // returns prime factors of n
-  def primeFactors(composite: Long): List[Long] = {
-    def primeFactors(n: Long, acc: List[Long], remainingPrimes: List[Long]): List[Long] = {
-      if (n == 1) return acc
-
+  def primeFactors(composite: Long): Stream[Long] = {
+    def primeFactors(n: Long, factors: => Stream[Long], remainingPrimes: Seq[Long]): Stream[Long] = {
       val factor = remainingPrimes.head
-      if (factor * 2 > composite) return acc
+      if (factor * factor > n) return n #:: factors
 
       if (n % factor == 0)
-        primeFactors(n / factor, factor :: acc, remainingPrimes)
-      else primeFactors(n, acc, remainingPrimes.tail)
+        primeFactors(n / factor, factor #:: factors, remainingPrimes)
+      else primeFactors(n, factors, remainingPrimes.tail)
     }
 
-    //    primeFactors(composite, Nil, primes(Math.sqrt(composite).toInt))
-    primeFactors(composite, Nil, primes_)
+    primeFactors(composite, Stream.empty, primes_)
   }
 
-  // fast, mutable prime number finder
+  // fast, mutable prime number generator
   def apply(length: Int): List[Long] = {
     val primeIndices: ArrayBuffer[Long] = mutable.ArrayBuffer.fill((length + 1) / 2)(1L)
 

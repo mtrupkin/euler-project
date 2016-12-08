@@ -36,7 +36,7 @@ object Problem_038 extends App {
 
     res.find(_ == guess) match {
       case Some(pandigital) => pandigital.toInt
-      case None => search(Pandigital.prevPandigital(guess))
+      case None => search(prevPandigital(guess))
     }
   }
 

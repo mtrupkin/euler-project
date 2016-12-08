@@ -23,6 +23,4 @@ object Problem_027 extends App {
 
   println(consecutivePrimes(quadratic(-79, 1601)))
 
-
-
 }

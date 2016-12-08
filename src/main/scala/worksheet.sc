@@ -8,6 +8,7 @@
 //sixteen.map(parseRoman) //.foreach(println)
 
 import Primes._
-49.isPrime
+Primes.primeFactorsStream(102L).toList
+
 
 

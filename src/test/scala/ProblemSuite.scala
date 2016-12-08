@@ -8,10 +8,6 @@ class ProblemSuite extends FunSuite with Matchers {
      assert(Problem_001(10) === 23)
   }
 
-  test("prime factorization example") {
-     assert(Problem_003(13195) === 29)
-  }
-
   test("Collatz example") {
      assert(CollatzSequence(13).length === 10)
   }
@@ -20,12 +16,17 @@ class ProblemSuite extends FunSuite with Matchers {
     assert(Problem_015.paths(2, 2) === 6)
   }
 
+  test("Problem 4 solution") {
+    assert(Problem_004() === 906609)
+  }
+
+
   test("Pandigital example") {
-    assert(Pandigital.isPandigitalProduct(39, 186, 7254) === true)
+    assert(Problem_032.isPandigitalProduct(39, 186, 7254) === true)
   }
 
   test("Pandigital duplicate twos") {
-    assert(Pandigital.isPandigitalProduct(2, 6729, 13458) === false)
+    assert(Problem_032.isPandigitalProduct(2, 6729, 13458) === false)
   }
 
   test("Prime factors") {
