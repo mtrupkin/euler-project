@@ -5,13 +5,27 @@ import scala.collection.mutable.ArrayBuffer
 /**
   * Prime numbers and utilities
   */
-object Primes extends App {
+object Primes {
   lazy val primes_ = this(1000000)
 
   implicit class PrimeDetector[B](n: B) {
     def isPrime(implicit num: Integral[B]): Boolean = {
       primes_.takeWhile(_ <= num.toLong(n)).contains(n)
     }
+  }
+
+  // returns prime factors of n
+  def primeFactorSet(composite: Int): Set[Int] = {
+    def primeFactors(n: Int, factors: Set[Int], remainingPrimes: Seq[Long]): Set[Int] = {
+      val factor = remainingPrimes.head.toInt
+      if (factor * factor > n) return factors + n
+
+      if (n % factor == 0)
+        primeFactors(n / factor, factors + factor, remainingPrimes.tail)
+      else primeFactors(n, factors, remainingPrimes.tail)
+    }
+
+    primeFactors(composite, Set.empty, primes_)
   }
 
   // returns prime factors of n

@@ -9,27 +9,31 @@ object Problem_046 extends App {
     sqrt*sqrt == n
   }
 
+  // solve Golbach test in terms of just the odd composite and a prime
   def goldbachTest(guess: Int, prime: Int): Boolean = {
     isPerfectSquare( (guess - prime) / 2.0 )
   }
 
   def goldbachCounterExample(): Int = {
+    // all odd numbers starting with 5
     val q = Stream.from(5, 2).takeWhile( guess => {
+
+      // check to stop processing, skipping prime numbers
       if (isPrime(guess)) true else {
-        val q2 = for {
+
+        // Goldbach test results for each prime
+        val goldbachTestResults = for {
           prime <- Primes.primes_.takeWhile(_ < guess)
         } yield goldbachTest(guess, prime.toInt)
 
-        val r = q2.forall(!_)
-        if (r) {
-          println(s"guess: $guess")
-          println(q2)
-        }
+        // is at least one test result true?
+        val goldbachTestResult = goldbachTestResults.forall(!_)
 
-        !r
+        // stop processing if goldbach test fails
+        !goldbachTestResult
       }
     })
-    println(q.toList)
+    
     q.last
   }
 
